@@ -38,7 +38,7 @@ const AdvantagesSection = () => {
               <span className={`text-5xl font-black font-mono w-20 shrink-0 transition-colors ${
                 adv.highlight ? "text-accent/40" : "text-primary-foreground/10 group-hover:text-accent/30"
               }`}>
-                {adv.num}
+                {String(i + 1).padStart(2, '0')}
               </span>
               <div className={`w-12 h-12 flex items-center justify-center shrink-0 ${
                 adv.highlight ? "bg-accent" : "bg-accent/10"
