@@ -11,27 +11,25 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              Свяжитесь с нами
+            <span className="text-xs font-mono font-bold text-accent uppercase tracking-[0.3em]">[ Контакты ]</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mt-2 tracking-tighter mb-8">
+              Связаться
             </h2>
-            <p className="text-muted-foreground mb-8">
-              Оставьте заявку и мы перезвоним в течение 30 минут для консультации
-            </p>
 
             <div className="space-y-5">
               {[
-                { icon: Phone, label: "+375 (29) 123-45-67", sub: "Звоните ежедневно" },
-                { icon: Mail, label: "info@kolpak.by", sub: "Ответим в течение часа" },
+                { icon: Phone, label: "+375 (29) 123-45-67", sub: "Ежедневно" },
+                { icon: Mail, label: "info@kolpak.by", sub: "Ответ в течение часа" },
                 { icon: MapPin, label: "г. Минск, ул. Промышленная, 15", sub: "Производственный цех" },
-                { icon: Clock, label: "Пн-Пт: 8:00–18:00, Сб: 9:00–15:00", sub: "График работы" },
+                { icon: Clock, label: "Пн–Пт: 8:00–18:00, Сб: 9:00–15:00", sub: "График работы" },
               ].map((item) => (
-                <div key={item.label} className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-copper/10 flex items-center justify-center shrink-0">
-                    <item.icon className="w-5 h-5 text-copper" />
+                <div key={item.label} className="flex items-start gap-4 group">
+                  <div className="w-10 h-10 bg-primary flex items-center justify-center shrink-0">
+                    <item.icon className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">{item.label}</p>
-                    <p className="text-sm text-muted-foreground">{item.sub}</p>
+                    <p className="font-bold text-foreground text-sm">{item.label}</p>
+                    <p className="text-xs text-muted-foreground font-mono">{item.sub}</p>
                   </div>
                 </div>
               ))}
@@ -43,39 +41,42 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <form className="bg-card rounded-xl p-8 shadow-card space-y-5">
-              <h3 className="text-xl font-bold text-foreground mb-2">Оставить заявку</h3>
+            <div className="bg-card border-brutal p-8 shadow-brutal space-y-5">
+              <h3 className="text-xl font-bold text-foreground uppercase tracking-tight">Заявка</h3>
               <div>
+                <label className="block text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider mb-2">Имя</label>
                 <input
                   type="text"
                   placeholder="Ваше имя"
-                  className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-copper/50"
+                  className="w-full px-4 py-3 border-brutal-thin bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-accent"
                 />
               </div>
               <div>
+                <label className="block text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider mb-2">Телефон</label>
                 <input
                   type="tel"
-                  placeholder="Телефон"
-                  className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-copper/50"
+                  placeholder="+375 (__) ___-__-__"
+                  className="w-full px-4 py-3 border-brutal-thin bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-accent"
                 />
               </div>
               <div>
+                <label className="block text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider mb-2">Сообщение</label>
                 <textarea
                   rows={3}
                   placeholder="Опишите ваш запрос"
-                  className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-copper/50 resize-none"
+                  className="w-full px-4 py-3 border-brutal-thin bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-accent resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full py-3.5 bg-copper text-accent-foreground font-semibold rounded-md hover:bg-copper-light transition-colors shadow-copper"
+                className="w-full py-4 bg-accent text-accent-foreground font-bold uppercase tracking-wider shadow-brutal-sm hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal transition-all"
               >
-                Отправить заявку
+                Отправить заявку →
               </button>
-              <p className="text-xs text-muted-foreground text-center">
+              <p className="text-[10px] text-muted-foreground text-center font-mono">
                 Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
               </p>
-            </form>
+            </div>
           </motion.div>
         </div>
       </div>

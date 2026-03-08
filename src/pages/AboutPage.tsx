@@ -7,9 +7,9 @@ import heroBg from "@/assets/hero-bg.jpg";
 
 const stats = [
   { value: "12+", label: "Лет на рынке" },
-  { value: "5000+", label: "Выполненных заказов" },
+  { value: "5000+", label: "Заказов" },
   { value: "10", label: "Лет гарантии" },
-  { value: "100%", label: "Собственное производство" },
+  { value: "100%", label: "Своё производство" },
 ];
 
 const AboutPage = () => {
@@ -17,94 +17,73 @@ const AboutPage = () => {
     <div className="min-h-screen">
       <Header />
       <div className="pt-20 lg:pt-24">
-        <section className="bg-gradient-graphite metal-texture py-16">
+        <section className="bg-primary noise-texture py-16 border-b-4 border-accent">
           <div className="container mx-auto px-4">
-            <h1 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-3">О компании</h1>
-            <p className="text-primary-foreground/50 text-lg">Kolpak.by — производство изделий из металла и меди</p>
+            <span className="text-xs font-mono font-bold text-accent uppercase tracking-[0.3em]">[ О компании ]</span>
+            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mt-2 tracking-tighter">Kolpak.by</h1>
+            <p className="text-primary-foreground/40 text-sm font-mono mt-3">Производство изделий из металла и меди</p>
           </div>
         </section>
 
-        <section className="py-16">
+        <section className="py-16 stripe-bg">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
-                  Мы создаём <span className="text-gradient-copper">долговечные изделия</span> из металла
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tighter mb-6">
+                  Долговечные изделия <span className="text-accent">из металла</span>
                 </h2>
-                <div className="space-y-4 text-muted-foreground leading-relaxed">
-                  <p>
-                    Компания Kolpak.by — это современное производство доборных элементов кровли, 
-                    изделий из меди и жестяных работ. Мы работаем на рынке Беларуси более 12 лет.
-                  </p>
-                  <p>
-                    Наш производственный цех оснащён станками лазерной резки, листогибочным 
-                    оборудованием и вальцовочными установками, позволяющими изготавливать изделия 
-                    любой сложности с точностью до 0.1 мм.
-                  </p>
-                  <p>
-                    Мы работаем как с частными заказчиками, так и со строительными компаниями, 
-                    архитекторами и дилерами по всей республике.
-                  </p>
+                <div className="space-y-4 text-sm text-muted-foreground font-mono leading-relaxed">
+                  <p>Компания Kolpak.by — современное производство доборных элементов кровли, изделий из меди и жестяных работ. На рынке Беларуси более 12 лет.</p>
+                  <p>Цех оснащён станками лазерной резки, листогибочным оборудованием и вальцовочными установками — изделия любой сложности с точностью до 0.1 мм.</p>
+                  <p>Работаем с частными заказчиками, строительными компаниями, архитекторами и дилерами по всей республике.</p>
                 </div>
               </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="rounded-xl overflow-hidden"
-              >
-                <img src={heroBg} alt="Производство Kolpak.by" className="w-full h-80 lg:h-96 object-cover rounded-xl" />
+              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+                <div className="border-brutal overflow-hidden shadow-brutal">
+                  <img src={heroBg} alt="Производство" className="w-full h-80 lg:h-96 object-cover grayscale hover:grayscale-0 transition-all duration-500" />
+                </div>
               </motion.div>
             </div>
           </div>
         </section>
 
-        <section className="py-16 bg-warm-white">
+        {/* Stats */}
+        <section className="py-16 bg-primary noise-texture">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {stats.map((s, i) => (
-                <motion.div
-                  key={s.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="text-center"
-                >
-                  <span className="text-4xl md:text-5xl font-black text-gradient-copper">{s.value}</span>
-                  <p className="text-sm text-muted-foreground mt-2">{s.label}</p>
+                <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                  className="text-center p-6 border-2 border-primary-foreground/10">
+                  <span className="text-4xl md:text-5xl font-black text-accent font-mono">{s.value}</span>
+                  <p className="text-xs text-primary-foreground/40 font-mono uppercase tracking-wider mt-2">{s.label}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="py-16">
+        {/* Advantages */}
+        <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-12">Наши преимущества</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <span className="text-xs font-mono font-bold text-accent uppercase tracking-[0.3em]">[ Преимущества ]</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tighter mt-2 mb-10">Почему мы</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { icon: Factory, title: "Собственный цех", desc: "Полный цикл производства — от раскроя до финишного покрытия. Никаких посредников." },
-                { icon: Zap, title: "Современное оборудование", desc: "Лазерная резка, ЧПУ-гибка, вальцовка. Точность до 0.1 мм." },
-                { icon: Users, title: "Опытная команда", desc: "Инженеры-технологи, жестянщики и монтажники с опытом от 10 лет." },
-                { icon: Award, title: "Качественные материалы", desc: "Сертифицированная сталь и медь от проверенных поставщиков." },
-                { icon: Shield, title: "Гарантия до 10 лет", desc: "На все изделия с полимерным покрытием и медные изделия." },
-                { icon: Truck, title: "Доставка по всей РБ", desc: "Собственный транспорт. Бережная упаковка и доставка до объекта." },
+                { icon: Factory, title: "Собственный цех", desc: "Полный цикл — от раскроя до финишного покрытия" },
+                { icon: Zap, title: "Оборудование", desc: "Лазерная резка, ЧПУ-гибка, вальцовка" },
+                { icon: Users, title: "Команда", desc: "Инженеры и жестянщики с опытом от 10 лет" },
+                { icon: Award, title: "Материалы", desc: "Сертифицированная сталь и медь" },
+                { icon: Shield, title: "Гарантия", desc: "До 10 лет на полимерное покрытие" },
+                { icon: Truck, title: "Доставка", desc: "По всей РБ собственным транспортом" },
               ].map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className="flex items-start gap-4 p-6 bg-card rounded-xl shadow-card"
-                >
-                  <div className="w-12 h-12 rounded-lg bg-copper/10 flex items-center justify-center shrink-0">
-                    <item.icon className="w-6 h-6 text-copper" />
+                <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}
+                  className="flex items-start gap-4 p-5 bg-card border-brutal-thin hover-lift">
+                  <div className="w-10 h-10 bg-primary flex items-center justify-center shrink-0">
+                    <item.icon className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-foreground mb-1">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    <h3 className="font-bold text-foreground uppercase tracking-tight text-sm">{item.title}</h3>
+                    <p className="text-xs text-muted-foreground font-mono mt-1">{item.desc}</p>
                   </div>
                 </motion.div>
               ))}
