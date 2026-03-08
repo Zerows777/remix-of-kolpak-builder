@@ -45,11 +45,11 @@ const Header = () => {
 
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="tel:+375291234567"
+              href="tel:+375296111421"
               className="flex items-center gap-2 text-sm font-mono font-bold text-primary-foreground/70 hover:text-accent transition-colors"
             >
               <Phone className="w-4 h-4" />
-              +375(29)123-45-67
+              +375(29)611-14-21
             </a>
             <Link
               to="/calculator"
