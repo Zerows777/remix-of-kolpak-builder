@@ -7,7 +7,6 @@ const advantages = [
   { icon: Ruler, num: "03", title: "Станок 3 метра", desc: "Гибка до 3 метров — таких мало в Беларуси", highlight: true },
   { icon: Award, num: "04", title: "Патинирование", desc: "Искусственное состаривание для благородного вида", highlight: false },
   { icon: Truck, num: "05", title: "Доставка по РБ", desc: "Собственный транспорт, бережная упаковка", highlight: false },
-  { icon: Shield, num: "06", title: "Гарантия 10 лет", desc: "На изделия с полимерным покрытием", highlight: false },
 ];
 
 const AdvantagesSection = () => {
