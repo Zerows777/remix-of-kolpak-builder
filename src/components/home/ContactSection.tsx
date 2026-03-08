@@ -20,7 +20,7 @@ const ContactSection = () => {
               {[
                 { icon: Phone, label: "+375 (29) 611-14-21", sub: "Ежедневно" },
                 { icon: Mail, label: "info@kolpak.by", sub: "Ответ в течение часа" },
-                { icon: MapPin, label: "г. Минск, ул. Промышленная, 15", sub: "Производственный цех" },
+                { icon: MapPin, label: "г. Смолевичи, ул. Торговая, 8А", sub: "Производственный цех" },
                 { icon: Clock, label: "Пн–Пт: 8:00–18:00, Сб: 9:00–15:00", sub: "График работы" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4 group">
