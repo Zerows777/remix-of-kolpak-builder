@@ -5,6 +5,7 @@ const advantages = [
   { icon: Factory, num: "01", title: "Своё производство", desc: "Полный цикл от проектирования до готового изделия", highlight: false },
   { icon: Palette, num: "02", title: "Дизайн", desc: "Разработка индивидуальных решений под ваш проект", highlight: false },
   { icon: Ruler, num: "03", title: "Станок 3 метра", desc: "Гибка до 3 метров — таких мало в Беларуси", highlight: true },
+  { icon: Shield, num: "04", title: "Толстый металл", desc: "Работаем с толщиной до 0.8 мм — надёжность на годы", highlight: false },
   { icon: Award, num: "04", title: "Патинирование", desc: "Искусственное состаривание для благородного вида", highlight: false },
   { icon: Truck, num: "05", title: "Доставка по РБ", desc: "Собственный транспорт, бережная упаковка", highlight: false },
 ];
