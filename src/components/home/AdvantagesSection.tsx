@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
-import { Factory, Palette, Shield, Truck, Award } from "lucide-react";
+import { Factory, Palette, Shield, Truck, Award, Ruler } from "lucide-react";
 
 const advantages = [
-  { icon: Factory, num: "01", title: "Своё производство", desc: "Полный цикл от проектирования до готового изделия" },
-  { icon: Palette, num: "02", title: "Дизайн", desc: "Разработка индивидуальных решений под ваш проект" },
-  { icon: Award, num: "03", title: "Патинирование", desc: "Искусственное состаривание для благородного вида" },
-  { icon: Truck, num: "04", title: "Доставка по РБ", desc: "Собственный транспорт, бережная упаковка" },
-  { icon: Shield, num: "05", title: "Гарантия 10 лет", desc: "На изделия с полимерным покрытием" },
+  { icon: Factory, num: "01", title: "Своё производство", desc: "Полный цикл от проектирования до готового изделия", highlight: false },
+  { icon: Palette, num: "02", title: "Дизайн", desc: "Разработка индивидуальных решений под ваш проект", highlight: false },
+  { icon: Ruler, num: "03", title: "Станок 3 метра", desc: "Гибка до 3 метров — таких мало в Беларуси", highlight: true },
+  { icon: Award, num: "04", title: "Патинирование", desc: "Искусственное состаривание для благородного вида", highlight: false },
+  { icon: Truck, num: "05", title: "Доставка по РБ", desc: "Собственный транспорт, бережная упаковка", highlight: false },
+  { icon: Shield, num: "06", title: "Гарантия 10 лет", desc: "На изделия с полимерным покрытием", highlight: false },
 ];
 
 const AdvantagesSection = () => {
