@@ -126,10 +126,10 @@ const CatalogPage = () => {
                           ))}
                         </div>
                         <Link
-                          to="/calculator"
+                          to="/contacts"
                           className="inline-block mt-5 px-4 py-2 bg-accent text-accent-foreground text-xs font-bold uppercase tracking-wider shadow-brutal-sm hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
                         >
-                          Расчёт →
+                          Заявка →
                         </Link>
                       </div>
                     </div>

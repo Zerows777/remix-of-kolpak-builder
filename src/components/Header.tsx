@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const navItems = [
   { label: "Главная", path: "/" },
   { label: "Каталог", path: "/catalog" },
-  { label: "Калькулятор", path: "/calculator" },
+  
   { label: "Портфолио", path: "/portfolio" },
   { label: "О компании", path: "/about" },
   { label: "Контакты", path: "/contacts" },
@@ -52,10 +52,10 @@ const Header = () => {
               +375(29)611-14-21
             </a>
             <Link
-              to="/calculator"
+              to="/contacts"
               className="px-5 py-2.5 bg-accent text-accent-foreground text-sm font-bold uppercase tracking-wider border-2 border-accent-foreground/20 shadow-brutal-sm hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal transition-all"
             >
-              Расчёт →
+              Заявка →
             </Link>
           </div>
 
