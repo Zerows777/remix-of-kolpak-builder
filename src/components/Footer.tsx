@@ -17,17 +17,17 @@ const Footer = () => {
             <h3 className="text-3xl font-bold tracking-tighter mb-4">
               KOLPAK<span className="text-accent">.BY</span>
             </h3>
-            <p className="text-primary-foreground/50 text-sm leading-relaxed font-mono">
+            <p className="text-primary-foreground/50 text-base leading-relaxed font-mono">
               Производство доборных элементов кровли, изделий из меди и жестяных работ.
             </p>
           </div>
 
           <div>
             <h4 className="font-bold uppercase tracking-wider text-sm mb-4 text-accent">Каталог</h4>
-            <ul className="space-y-2 text-sm text-primary-foreground/50">
+            <ul className="space-y-2 text-primary-foreground/50">
               {["Колпаки на дымоходы", "Доборные элементы", "Изделия из меди", "Заборы ранчо", "Вент. решётки"].map(item => (
                 <li key={item}>
-                  <Link to="/catalog" className="hover:text-accent transition-colors font-mono text-xs">
+                  <Link to="/catalog" className="hover:text-accent transition-colors font-mono text-sm">
                     → {item}
                   </Link>
                 </li>
@@ -45,7 +45,7 @@ const Footer = () => {
                 { label: "Контакты", path: "/contacts" },
               ].map(item => (
                 <li key={item.label}>
-                  <Link to={item.path} className="hover:text-accent transition-colors font-mono text-xs">
+                  <Link to={item.path} className="hover:text-accent transition-colors font-mono text-sm">
                     → {item.label}
                   </Link>
                 </li>
@@ -55,7 +55,7 @@ const Footer = () => {
 
           <div>
             <h4 className="font-bold uppercase tracking-wider text-sm mb-4 text-accent">Контакты</h4>
-            <ul className="space-y-3 text-sm text-primary-foreground/50 font-mono text-xs">
+            <ul className="space-y-3 text-primary-foreground/50 font-mono text-sm">
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-accent shrink-0" />
                 +375 (29) 123-45-67
@@ -73,8 +73,8 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-6 border-t-2 border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-primary-foreground/30 font-mono">© 2026 KOLPAK.BY</p>
-          <p className="text-xs text-primary-foreground/30 font-mono">МЕТАЛЛ • МЕДЬ • АРХИТЕКТУРА</p>
+          <p className="text-sm text-primary-foreground/30 font-mono">© 2026 KOLPAK.BY</p>
+          <p className="text-sm text-primary-foreground/30 font-mono">МЕТАЛЛ • МЕДЬ • АРХИТЕКТУРА</p>
         </div>
       </div>
     </footer>
