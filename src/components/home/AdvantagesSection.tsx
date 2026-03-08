@@ -30,17 +30,28 @@ const AdvantagesSection = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group flex items-center gap-6 py-6 border-b border-primary-foreground/10 hover:border-accent/50 transition-colors"
+              className={`group flex items-center gap-6 py-6 border-b transition-colors ${
+                adv.highlight 
+                  ? "border-accent bg-accent/10 px-4 -mx-4" 
+                  : "border-primary-foreground/10 hover:border-accent/50"
+              }`}
             >
-              <span className="text-5xl font-black text-primary-foreground/10 group-hover:text-accent/30 transition-colors font-mono w-20 shrink-0">
+              <span className={`text-5xl font-black font-mono w-20 shrink-0 transition-colors ${
+                adv.highlight ? "text-accent/40" : "text-primary-foreground/10 group-hover:text-accent/30"
+              }`}>
                 {adv.num}
               </span>
-              <div className="w-12 h-12 bg-accent/10 flex items-center justify-center shrink-0">
-                <adv.icon className="w-6 h-6 text-accent" />
+              <div className={`w-12 h-12 flex items-center justify-center shrink-0 ${
+                adv.highlight ? "bg-accent" : "bg-accent/10"
+              }`}>
+                <adv.icon className={`w-6 h-6 ${adv.highlight ? "text-accent-foreground" : "text-accent"}`} />
               </div>
               <div>
-                <h3 className="font-bold text-primary-foreground uppercase tracking-tight text-lg group-hover:text-accent transition-colors">
+                <h3 className={`font-bold uppercase tracking-tight text-lg transition-colors ${
+                  adv.highlight ? "text-accent" : "text-primary-foreground group-hover:text-accent"
+                }`}>
                   {adv.title}
+                  {adv.highlight && <span className="ml-2 text-[10px] font-mono bg-accent text-accent-foreground px-2 py-0.5 align-middle tracking-widest">РЕДКОСТЬ</span>}
                 </h3>
                 <p className="text-sm text-primary-foreground/40 font-mono">{adv.desc}</p>
               </div>
