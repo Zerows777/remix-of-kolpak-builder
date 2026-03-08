@@ -58,11 +58,10 @@ const HeroSection = () => {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
-              to="/calculator"
+              to="/contacts"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 border-3 border-primary-foreground/30 text-primary-foreground font-bold uppercase tracking-wider hover:border-accent hover:text-accent transition-all"
             >
-              <Calculator className="w-5 h-5" />
-              Расчёт
+              Оставить заявку
             </Link>
           </div>
         </motion.div>

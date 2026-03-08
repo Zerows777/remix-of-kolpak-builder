@@ -41,7 +41,7 @@ const Footer = () => {
               {[
                 { label: "О компании", path: "/about" },
                 { label: "Портфолио", path: "/portfolio" },
-                { label: "Калькулятор", path: "/calculator" },
+                
                 { label: "Контакты", path: "/contacts" },
               ].map(item => (
                 <li key={item.label}>
