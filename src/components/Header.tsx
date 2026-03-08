@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const navItems = [
   { label: "Главная", path: "/" },
@@ -17,24 +17,25 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-primary/95 backdrop-blur-md border-b border-copper/20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-primary border-b-4 border-accent">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-primary-foreground tracking-tight">
-              KOLPAK<span className="text-gradient-copper">.by</span>
+          <Link to="/" className="flex items-center gap-1">
+            <span className="text-2xl font-bold text-primary-foreground tracking-tighter uppercase">
+              Kolpak
             </span>
+            <span className="text-2xl font-bold text-accent">.by</span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`text-sm font-medium tracking-wide transition-colors hover:text-copper ${
+                className={`px-3 py-1.5 text-sm font-bold uppercase tracking-wider transition-all ${
                   location.pathname === item.path
-                    ? "text-copper"
-                    : "text-primary-foreground/80"
+                    ? "bg-accent text-accent-foreground"
+                    : "text-primary-foreground/70 hover:bg-primary-foreground/10 hover:text-primary-foreground"
                 }`}
               >
                 {item.label}
@@ -42,19 +43,19 @@ const Header = () => {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3">
             <a
               href="tel:+375291234567"
-              className="flex items-center gap-2 text-sm font-medium text-primary-foreground/80 hover:text-copper transition-colors"
+              className="flex items-center gap-2 text-sm font-mono font-bold text-primary-foreground/70 hover:text-accent transition-colors"
             >
               <Phone className="w-4 h-4" />
-              +375 (29) 123-45-67
+              +375(29)123-45-67
             </a>
             <Link
               to="/calculator"
-              className="px-5 py-2.5 bg-copper text-accent-foreground text-sm font-semibold rounded-md hover:bg-copper-light transition-colors"
+              className="px-5 py-2.5 bg-accent text-accent-foreground text-sm font-bold uppercase tracking-wider border-2 border-accent-foreground/20 shadow-brutal-sm hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal transition-all"
             >
-              Рассчитать стоимость
+              Расчёт →
             </Link>
           </div>
 
@@ -62,7 +63,7 @@ const Header = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden text-primary-foreground"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
           </button>
         </div>
       </div>
@@ -73,30 +74,23 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-primary border-t border-copper/20"
+            className="lg:hidden bg-primary border-t-2 border-accent"
           >
-            <nav className="container mx-auto px-4 py-4 flex flex-col gap-3">
+            <nav className="container mx-auto px-4 py-4 flex flex-col">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`text-sm font-medium py-2 transition-colors ${
+                  className={`text-sm font-bold uppercase tracking-wider py-3 border-b border-primary-foreground/10 transition-colors ${
                     location.pathname === item.path
-                      ? "text-copper"
-                      : "text-primary-foreground/80"
+                      ? "text-accent"
+                      : "text-primary-foreground/70"
                   }`}
                 >
                   {item.label}
                 </Link>
               ))}
-              <a
-                href="tel:+375291234567"
-                className="flex items-center gap-2 text-sm font-medium text-copper py-2"
-              >
-                <Phone className="w-4 h-4" />
-                +375 (29) 123-45-67
-              </a>
             </nav>
           </motion.div>
         )}

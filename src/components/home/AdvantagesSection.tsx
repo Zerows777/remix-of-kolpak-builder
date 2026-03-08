@@ -2,39 +2,47 @@ import { motion } from "framer-motion";
 import { Factory, Zap, Shield, Truck, Award } from "lucide-react";
 
 const advantages = [
-  { icon: Factory, title: "Своё производство", desc: "Полный цикл от проектирования до готового изделия" },
-  { icon: Zap, title: "Лазерная резка", desc: "Высокоточное оборудование для идеальной геометрии" },
-  { icon: Award, title: "Патинирование меди", desc: "Искусственное состаривание для благородного вида" },
-  { icon: Truck, title: "Доставка по РБ", desc: "Собственный транспорт, бережная упаковка" },
-  { icon: Shield, title: "Гарантия 10 лет", desc: "На все изделия с полимерным покрытием" },
+  { icon: Factory, num: "01", title: "Своё производство", desc: "Полный цикл от проектирования до готового изделия" },
+  { icon: Zap, num: "02", title: "Лазерная резка", desc: "Высокоточное оборудование для идеальной геометрии" },
+  { icon: Award, num: "03", title: "Патинирование", desc: "Искусственное состаривание для благородного вида" },
+  { icon: Truck, num: "04", title: "Доставка по РБ", desc: "Собственный транспорт, бережная упаковка" },
+  { icon: Shield, num: "05", title: "Гарантия 10 лет", desc: "На изделия с полимерным покрытием" },
 ];
 
 const AdvantagesSection = () => {
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-primary noise-texture">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-            Почему <span className="text-gradient-copper">Kolpak.by</span>
+        <div className="mb-14">
+          <span className="text-xs font-mono font-bold text-accent uppercase tracking-[0.3em]">[ 02 ]</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mt-2 tracking-tighter">
+            Почему мы
           </h2>
-          <p className="text-muted-foreground">Преимущества работы с нами</p>
+          <div className="w-20 h-1 bg-accent mt-4" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="space-y-0">
           {advantages.map((adv, i) => (
             <motion.div
               key={adv.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="text-center p-6"
+              className="group flex items-center gap-6 py-6 border-b border-primary-foreground/10 hover:border-accent/50 transition-colors"
             >
-              <div className="w-16 h-16 mx-auto rounded-full bg-gradient-copper flex items-center justify-center mb-4 shadow-copper">
-                <adv.icon className="w-7 h-7 text-accent-foreground" />
+              <span className="text-5xl font-black text-primary-foreground/10 group-hover:text-accent/30 transition-colors font-mono w-20 shrink-0">
+                {adv.num}
+              </span>
+              <div className="w-12 h-12 bg-accent/10 flex items-center justify-center shrink-0">
+                <adv.icon className="w-6 h-6 text-accent" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">{adv.title}</h3>
-              <p className="text-sm text-muted-foreground">{adv.desc}</p>
+              <div>
+                <h3 className="font-bold text-primary-foreground uppercase tracking-tight text-lg group-hover:text-accent transition-colors">
+                  {adv.title}
+                </h3>
+                <p className="text-sm text-primary-foreground/40 font-mono">{adv.desc}</p>
+              </div>
             </motion.div>
           ))}
         </div>

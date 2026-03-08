@@ -7,26 +7,27 @@ import portfolio3 from "@/assets/portfolio-3.jpg";
 import portfolio4 from "@/assets/portfolio-4.jpg";
 
 const projects = [
-  { img: portfolio1, title: "Медный колпак", category: "Кровля", desc: "Шатровый колпак из меди с патиной" },
-  { img: portfolio2, title: "Кухонная вытяжка", category: "Интерьер", desc: "Купольная вытяжка из меди" },
-  { img: portfolio3, title: "Забор ранчо", category: "Ограждения", desc: "Забор ранчо 3 ряда с воротами" },
-  { img: portfolio4, title: "Доборные элементы", category: "Кровля", desc: "Комплект коньков и ендов" },
+  { img: portfolio1, title: "Медный колпак", category: "КРОВЛЯ", desc: "Шатровый колпак из меди с патиной" },
+  { img: portfolio2, title: "Кухонная вытяжка", category: "ИНТЕРЬЕР", desc: "Купольная вытяжка из меди" },
+  { img: portfolio3, title: "Забор ранчо", category: "ОГРАЖДЕНИЯ", desc: "3 ряда лаг с откатными воротами" },
+  { img: portfolio4, title: "Доборные элементы", category: "КРОВЛЯ", desc: "Комплект коньков и ендов" },
 ];
 
 const PortfolioPreview = () => {
   return (
     <section className="py-20 bg-warm-white">
       <div className="container mx-auto px-4">
-        <div className="flex items-end justify-between mb-12">
+        <div className="flex items-end justify-between mb-14">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              Наши работы
+            <span className="text-xs font-mono font-bold text-accent uppercase tracking-[0.3em]">[ 03 ]</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mt-2 tracking-tighter">
+              Работы
             </h2>
-            <p className="text-muted-foreground">Реализованные проекты по всей Беларуси</p>
+            <div className="w-20 h-1 bg-accent mt-4" />
           </div>
           <Link
             to="/portfolio"
-            className="hidden md:flex items-center gap-2 text-sm font-semibold text-copper hover:text-copper-dark transition-colors"
+            className="hidden md:flex items-center gap-2 text-sm font-bold text-foreground uppercase tracking-wider hover:text-accent transition-colors"
           >
             Все проекты <ArrowRight className="w-4 h-4" />
           </Link>
@@ -39,29 +40,27 @@ const PortfolioPreview = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group relative overflow-hidden rounded-lg aspect-[4/5] cursor-pointer"
+              transition={{ delay: i * 0.08 }}
+              className="group border-brutal-thin bg-card hover-lift overflow-hidden"
             >
-              <img
-                src={p.img}
-                alt={p.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-5">
-                <span className="text-xs font-medium text-copper tracking-wide uppercase">{p.category}</span>
-                <h3 className="text-lg font-bold text-primary-foreground mt-1">{p.title}</h3>
-                <p className="text-sm text-primary-foreground/60 mt-1">{p.desc}</p>
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={p.img}
+                  alt={p.title}
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-5">
+                <span className="text-[10px] font-mono font-bold text-accent tracking-[0.2em]">{p.category}</span>
+                <h3 className="text-base font-bold text-foreground uppercase mt-1">{p.title}</h3>
+                <p className="text-xs text-muted-foreground font-mono mt-1">{p.desc}</p>
               </div>
             </motion.div>
           ))}
         </div>
 
         <div className="mt-8 text-center md:hidden">
-          <Link
-            to="/portfolio"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-copper"
-          >
+          <Link to="/portfolio" className="inline-flex items-center gap-2 text-sm font-bold text-accent uppercase">
             Все проекты <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
