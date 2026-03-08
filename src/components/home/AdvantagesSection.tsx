@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { Factory, Zap, Shield, Truck, Award } from "lucide-react";
+import { Factory, Palette, Shield, Truck, Award } from "lucide-react";
 
 const advantages = [
   { icon: Factory, num: "01", title: "Своё производство", desc: "Полный цикл от проектирования до готового изделия" },
-  { icon: Award, num: "02", title: "Патинирование", desc: "Искусственное состаривание для благородного вида" },
-  { icon: Truck, num: "03", title: "Доставка по РБ", desc: "Собственный транспорт, бережная упаковка" },
-  { icon: Shield, num: "04", title: "Гарантия 10 лет", desc: "На изделия с полимерным покрытием" },
+  { icon: Palette, num: "02", title: "Дизайн", desc: "Разработка индивидуальных решений под ваш проект" },
+  { icon: Award, num: "03", title: "Патинирование", desc: "Искусственное состаривание для благородного вида" },
+  { icon: Truck, num: "04", title: "Доставка по РБ", desc: "Собственный транспорт, бережная упаковка" },
   { icon: Shield, num: "05", title: "Гарантия 10 лет", desc: "На изделия с полимерным покрытием" },
 ];
 
