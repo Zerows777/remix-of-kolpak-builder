@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Plus, Settings, X, Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, Settings, X, Pencil, Trash2, ChevronLeft, ChevronRight, LogOut } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Dialog,
   DialogContent,
@@ -43,6 +44,8 @@ interface Category {
 }
 
 const PortfolioPage = () => {
+  const { user, signOut } = useAuth();
+  const isAdmin = !!user;
   const [activeFilter, setActiveFilter] = useState("Все");
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -198,65 +201,70 @@ const PortfolioPage = () => {
                 <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mt-2 tracking-tighter">Работы</h1>
                 <p className="text-primary-foreground/40 text-sm font-mono mt-3">Реализованные проекты по всей Беларуси</p>
               </div>
-              <div className="flex gap-2">
-                <Dialog open={showCatManager} onOpenChange={setShowCatManager}>
-                  <DialogTrigger asChild>
-                    <Button variant="outline" size="icon" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
-                      <Settings className="w-4 h-4" />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Управление категориями</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <div className="flex gap-2">
-                        <Input
-                          value={newCatName}
-                          onChange={(e) => setNewCatName(e.target.value)}
-                          placeholder="Новая категория"
-                          onKeyDown={(e) => e.key === 'Enter' && addCategory()}
-                        />
-                        <Button onClick={addCategory} size="sm">Добавить</Button>
-                      </div>
-                      <div className="space-y-2">
-                        {categories.map(cat => (
-                          <div key={cat.id} className="flex items-center gap-2 p-2 rounded border border-border">
-                            {editingCat?.id === cat.id ? (
-                              <>
-                                <Input
-                                  value={editCatName}
-                                  onChange={(e) => setEditCatName(e.target.value)}
-                                  className="flex-1 h-8"
-                                  onKeyDown={(e) => e.key === 'Enter' && updateCategory()}
-                                />
-                                <Button size="sm" variant="ghost" onClick={updateCategory}>✓</Button>
-                                <Button size="sm" variant="ghost" onClick={() => setEditingCat(null)}>✗</Button>
-                              </>
-                            ) : (
-                              <>
-                                <span className="flex-1 text-sm font-medium">{cat.name}</span>
-                                <Button size="sm" variant="ghost" onClick={() => { setEditingCat(cat); setEditCatName(cat.name); }}>
-                                  <Pencil className="w-3 h-3" />
-                                </Button>
-                                <Button size="sm" variant="ghost" onClick={() => deleteCategory(cat)} className="text-destructive hover:text-destructive">
-                                  <Trash2 className="w-3 h-3" />
-                                </Button>
-                              </>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-                <Link to="/add-project">
-                  <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Добавить проект
+              {isAdmin && (
+                <div className="flex gap-2">
+                  <Button variant="outline" size="icon" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground" onClick={() => signOut()}>
+                    <LogOut className="w-4 h-4" />
                   </Button>
-                </Link>
-              </div>
+                  <Dialog open={showCatManager} onOpenChange={setShowCatManager}>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="icon" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
+                        <Settings className="w-4 h-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Управление категориями</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="flex gap-2">
+                          <Input
+                            value={newCatName}
+                            onChange={(e) => setNewCatName(e.target.value)}
+                            placeholder="Новая категория"
+                            onKeyDown={(e) => e.key === 'Enter' && addCategory()}
+                          />
+                          <Button onClick={addCategory} size="sm">Добавить</Button>
+                        </div>
+                        <div className="space-y-2">
+                          {categories.map(cat => (
+                            <div key={cat.id} className="flex items-center gap-2 p-2 rounded border border-border">
+                              {editingCat?.id === cat.id ? (
+                                <>
+                                  <Input
+                                    value={editCatName}
+                                    onChange={(e) => setEditCatName(e.target.value)}
+                                    className="flex-1 h-8"
+                                    onKeyDown={(e) => e.key === 'Enter' && updateCategory()}
+                                  />
+                                  <Button size="sm" variant="ghost" onClick={updateCategory}>✓</Button>
+                                  <Button size="sm" variant="ghost" onClick={() => setEditingCat(null)}>✗</Button>
+                                </>
+                              ) : (
+                                <>
+                                  <span className="flex-1 text-sm font-medium">{cat.name}</span>
+                                  <Button size="sm" variant="ghost" onClick={() => { setEditingCat(cat); setEditCatName(cat.name); }}>
+                                    <Pencil className="w-3 h-3" />
+                                  </Button>
+                                  <Button size="sm" variant="ghost" onClick={() => deleteCategory(cat)} className="text-destructive hover:text-destructive">
+                                    <Trash2 className="w-3 h-3" />
+                                  </Button>
+                                </>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                  <Link to="/add-project">
+                    <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Добавить проект
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -295,12 +303,14 @@ const PortfolioPage = () => {
                         </div>
                       )}
                     </div>
-                    <button
-                      onClick={() => deleteProject(p)}
-                      className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </button>
+                    {isAdmin && (
+                      <button
+                        onClick={() => deleteProject(p)}
+                        className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    )}
                     <div className="p-5">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-accent text-accent-foreground uppercase tracking-wider">{p.category}</span>
