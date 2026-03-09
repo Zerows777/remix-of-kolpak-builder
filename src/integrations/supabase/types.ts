@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      portfolio_categories: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          sort_order: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          sort_order?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          sort_order?: number | null
+        }
+        Relationships: []
+      }
       portfolio_images: {
         Row: {
           alt_text: string | null
