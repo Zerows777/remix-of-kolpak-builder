@@ -7,10 +7,10 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps) => {
-  const { user, loading, isAdmin } = useAuth();
+  const { user, loading, isAdmin, roleLoading } = useAuth();
   const location = useLocation();
 
-  if (loading) {
+  if (loading || (requireAdmin && roleLoading)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
