@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Project {
@@ -69,9 +72,19 @@ const PortfolioPage = () => {
       <div className="pt-20 lg:pt-24">
         <section className="bg-primary noise-texture py-16 border-b-4 border-accent">
           <div className="container mx-auto px-4">
-            <span className="text-xs font-mono font-bold text-accent uppercase tracking-[0.3em]">[ Портфолио ]</span>
-            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mt-2 tracking-tighter">Работы</h1>
-            <p className="text-primary-foreground/40 text-sm font-mono mt-3">Реализованные проекты по всей Беларуси</p>
+            <div className="flex justify-between items-start">
+              <div>
+                <span className="text-xs font-mono font-bold text-accent uppercase tracking-[0.3em]">[ Портфолио ]</span>
+                <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mt-2 tracking-tighter">Работы</h1>
+                <p className="text-primary-foreground/40 text-sm font-mono mt-3">Реализованные проекты по всей Беларуси</p>
+              </div>
+              <Link to="/add-project">
+                <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Добавить проект
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
 
