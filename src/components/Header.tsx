@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -15,17 +15,37 @@ const navItems = [
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const clickCountRef = useRef(0);
+  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    clickCountRef.current += 1;
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+    if (clickCountRef.current >= 3) {
+      clickCountRef.current = 0;
+      navigate("/admin-login");
+      return;
+    }
+    clickTimerRef.current = setTimeout(() => {
+      if (clickCountRef.current < 3) {
+        navigate("/");
+      }
+      clickCountRef.current = 0;
+    }, 500);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-primary border-b-4 border-accent">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          <Link to="/" className="flex items-center gap-1">
+          <a href="/" onClick={handleLogoClick} className="flex items-center gap-1 cursor-pointer select-none">
             <span className="text-2xl font-bold text-primary-foreground tracking-tighter uppercase">
               Kolpak
             </span>
             <span className="text-2xl font-bold text-accent">.by</span>
-          </Link>
+          </a>
 
           <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
