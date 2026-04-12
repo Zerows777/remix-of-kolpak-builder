@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navItems = [
   { label: "Главная", path: "/" },
@@ -16,6 +17,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { enableAdminMode } = useAuth();
   const clickCountRef = useRef(0);
   const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -25,7 +27,8 @@ const Header = () => {
     if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
     if (clickCountRef.current >= 3) {
       clickCountRef.current = 0;
-      navigate("/admin-login");
+      enableAdminMode();
+      navigate("/portfolio");
       return;
     }
     clickTimerRef.current = setTimeout(() => {
