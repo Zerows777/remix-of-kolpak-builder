@@ -44,8 +44,7 @@ interface Category {
 }
 
 const PortfolioPage = () => {
-  const { user, signOut } = useAuth();
-  const isAdmin = !!user;
+  const { isAdmin, signOut } = useAuth();
   const [activeFilter, setActiveFilter] = useState("Все");
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
