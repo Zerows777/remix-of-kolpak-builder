@@ -341,8 +341,6 @@ const PortfolioPage = () => {
                         </button>
                       </div>
                     )}
-                    {p.show_on_home && !isAdmin && null}
-                    {p.show_on_home && isAdmin === false && null}
                     <div className="p-5">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-accent text-accent-foreground uppercase tracking-wider">{p.category}</span>
