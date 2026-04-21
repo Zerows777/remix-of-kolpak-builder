@@ -325,13 +325,24 @@ const PortfolioPage = () => {
                       )}
                     </div>
                     {isAdmin && (
-                      <button
-                        onClick={() => deleteProject(p)}
-                        className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </button>
+                      <div className="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => toggleHome(p)}
+                          title={p.show_on_home ? "Убрать с главной" : "Показывать на главной"}
+                          className={`rounded-full p-1.5 ${p.show_on_home ? 'bg-accent text-accent-foreground' : 'bg-background/90 text-foreground hover:bg-accent hover:text-accent-foreground'}`}
+                        >
+                          <Star className={`w-3 h-3 ${p.show_on_home ? 'fill-current' : ''}`} />
+                        </button>
+                        <button
+                          onClick={() => deleteProject(p)}
+                          className="bg-destructive text-destructive-foreground rounded-full p-1.5"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
                     )}
+                    {p.show_on_home && !isAdmin && null}
+                    {p.show_on_home && isAdmin === false && null}
                     <div className="p-5">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-accent text-accent-foreground uppercase tracking-wider">{p.category}</span>
