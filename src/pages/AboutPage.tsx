@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactSection from "@/components/home/ContactSection";
+import SEO from "@/components/SEO";
 import { Factory, Users, Award, Truck, Shield, Zap } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
@@ -15,6 +16,12 @@ const stats = [
 const AboutPage = () => {
   return (
     <div className="min-h-screen">
+      <SEO
+        title="О компании Kolpak.by — Производство изделий из металла и меди в Беларуси"
+        description="12+ лет на рынке, 5000+ заказов, 10 лет гарантии. Своё производство колпаков на дымоходы, доборных элементов кровли и изделий из меди в Беларуси."
+        keywords="о компании, kolpak.by, производство металла, медь, Беларусь, гарантия"
+        canonical="/about"
+      />
       <Header />
       <div className="pt-20 lg:pt-24">
         <section className="bg-primary noise-texture py-16 border-b-4 border-accent">

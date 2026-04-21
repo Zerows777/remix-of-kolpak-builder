@@ -1,10 +1,17 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactSection from "@/components/home/ContactSection";
+import SEO from "@/components/SEO";
 
 const ContactsPage = () => {
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Контакты — Kolpak.by | Связаться с производителем в Беларуси"
+        description="Свяжитесь с Kolpak.by: телефон, email, мессенджеры. Производство колпаков на дымоходы, изделий из меди и доборных элементов кровли в Беларуси."
+        keywords="контакты, kolpak.by, связаться, производитель, Беларусь, Минск"
+        canonical="/contacts"
+      />
       <Header />
       <div className="pt-20 lg:pt-24">
         <section className="bg-primary noise-texture py-16 border-b-4 border-accent">

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Flame, Home, ChefHat, Fence, Wind, FileText, Layers, Grid3X3 } from "lucide-react";
 
 const catalogCategories = [
@@ -62,6 +63,12 @@ const CatalogPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Каталог продукции — Kolpak.by | Колпаки, кровля, медь, заборы"
+        description="Каталог изделий: колпаки на дымоходы, доборные элементы кровли, изделия из меди, заборы ранчо, парапеты, вентиляционные решётки и изделия по чертежам. Производство в Беларуси."
+        keywords="каталог, колпаки на дымоходы, доборные элементы кровли, изделия из меди, заборы ранчо, парапеты, вентрешётки"
+        canonical="/catalog"
+      />
       <Header />
       <div className="pt-20 lg:pt-24">
         {/* Hero */}
