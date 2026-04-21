@@ -1,14 +1,18 @@
+User-agent: *
+Allow: /
+Disallow: /admin-login
+Disallow: /add-project
+Disallow: /edit-project/
+
 User-agent: Googlebot
 Allow: /
+
+User-agent: Yandex
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: *
-Allow: /
+Sitemap: https://kolpak.by/sitemap.xml
+Host: https://kolpak.by
