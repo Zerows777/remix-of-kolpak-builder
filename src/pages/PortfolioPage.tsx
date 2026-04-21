@@ -333,8 +333,16 @@ const PortfolioPage = () => {
                         >
                           <Star className={`w-3 h-3 ${p.show_on_home ? 'fill-current' : ''}`} />
                         </button>
+                        <Link
+                          to={`/edit-project/${p.id}`}
+                          title="Редактировать"
+                          className="bg-background/90 text-foreground hover:bg-primary hover:text-primary-foreground rounded-full p-1.5"
+                        >
+                          <Pencil className="w-3 h-3" />
+                        </Link>
                         <button
                           onClick={() => deleteProject(p)}
+                          title="Удалить"
                           className="bg-destructive text-destructive-foreground rounded-full p-1.5"
                         >
                           <Trash2 className="w-3 h-3" />
