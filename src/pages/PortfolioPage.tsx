@@ -213,6 +213,12 @@ const PortfolioPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Портфолио работ — Kolpak.by | Реализованные проекты по всей Беларуси"
+        description="Реализованные проекты Kolpak.by: колпаки на дымоходы, медные вытяжки, доборные элементы кровли, заборы ранчо, парапеты. Фотографии готовых работ."
+        keywords="портфолио, работы, фото, колпаки, медь, кровля, заборы ранчо, Беларусь"
+        canonical="/portfolio"
+      />
       <Header />
       <div className="pt-20 lg:pt-24">
         <section className="bg-primary noise-texture py-16 border-b-4 border-accent">
