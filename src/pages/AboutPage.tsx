@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactSection from "@/components/home/ContactSection";
+import SEO from "@/components/SEO";
 import { Factory, Users, Award, Truck, Shield, Zap } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
