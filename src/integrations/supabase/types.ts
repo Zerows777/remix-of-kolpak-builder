@@ -79,6 +79,7 @@ export type Database = {
           id: string
           is_published: boolean | null
           location: string | null
+          show_on_home: boolean
           sort_order: number | null
           tags: string[] | null
           title: string
@@ -92,6 +93,7 @@ export type Database = {
           id?: string
           is_published?: boolean | null
           location?: string | null
+          show_on_home?: boolean
           sort_order?: number | null
           tags?: string[] | null
           title: string
@@ -105,6 +107,7 @@ export type Database = {
           id?: string
           is_published?: boolean | null
           location?: string | null
+          show_on_home?: boolean
           sort_order?: number | null
           tags?: string[] | null
           title?: string

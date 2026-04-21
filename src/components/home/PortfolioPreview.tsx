@@ -1,19 +1,50 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import portfolio1 from "@/assets/portfolio-1.jpg";
 import portfolio2 from "@/assets/portfolio-2.jpg";
 import portfolio3 from "@/assets/portfolio-3.jpg";
 import portfolio4 from "@/assets/portfolio-4.jpg";
 
-const projects = [
-  { img: portfolio1, title: "Медный колпак", category: "КРОВЛЯ", desc: "Шатровый колпак из меди с патиной" },
-  { img: portfolio2, title: "Кухонная вытяжка", category: "ИНТЕРЬЕР", desc: "Купольная вытяжка из меди" },
-  { img: portfolio3, title: "Забор ранчо", category: "ОГРАЖДЕНИЯ", desc: "3 ряда лаг с откатными воротами" },
-  { img: portfolio4, title: "Доборные элементы", category: "КРОВЛЯ", desc: "Комплект коньков и ендов" },
+interface HomeProject {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  cover_image: string | null;
+}
+
+const fallbackProjects = [
+  { id: "f1", cover_image: portfolio1, title: "Медный колпак", category: "КРОВЛЯ", description: "Шатровый колпак из меди с патиной" },
+  { id: "f2", cover_image: portfolio2, title: "Кухонная вытяжка", category: "ИНТЕРЬЕР", description: "Купольная вытяжка из меди" },
+  { id: "f3", cover_image: portfolio3, title: "Забор ранчо", category: "ОГРАЖДЕНИЯ", description: "3 ряда лаг с откатными воротами" },
+  { id: "f4", cover_image: portfolio4, title: "Доборные элементы", category: "КРОВЛЯ", description: "Комплект коньков и ендов" },
 ];
 
 const PortfolioPreview = () => {
+  const [projects, setProjects] = useState<HomeProject[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("portfolio_projects")
+        .select("id, title, description, category, cover_image")
+        .eq("is_published", true)
+        .eq("show_on_home", true)
+        .order("sort_order", { ascending: true })
+        .order("created_at", { ascending: false })
+        .limit(8);
+      setProjects((data as HomeProject[]) || []);
+      setLoaded(true);
+    })();
+  }, []);
+
+  // Show DB-selected projects when present, otherwise fallback to demo projects
+  const display = loaded && projects.length > 0 ? projects : fallbackProjects;
+
   return (
     <section className="py-20 bg-warm-white">
       <div className="container mx-auto px-4">
@@ -34,26 +65,32 @@ const PortfolioPreview = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {projects.map((p, i) => (
+          {display.map((p, i) => (
             <motion.div
-              key={p.title}
+              key={p.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
               className="group border-brutal-thin bg-card hover-lift overflow-hidden"
             >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={p.img}
-                  alt={p.title}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
-                />
+              <div className="aspect-[4/3] overflow-hidden bg-muted">
+                {p.cover_image ? (
+                  <img
+                    src={p.cover_image}
+                    alt={p.title}
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
+                    Нет изображения
+                  </div>
+                )}
               </div>
               <div className="p-5">
-                <span className="text-[10px] font-mono font-bold text-accent tracking-[0.2em]">{p.category}</span>
+                <span className="text-[10px] font-mono font-bold text-accent tracking-[0.2em] uppercase">{p.category}</span>
                 <h3 className="text-base font-bold text-foreground uppercase mt-1">{p.title}</h3>
-                <p className="text-xs text-muted-foreground font-mono mt-1">{p.desc}</p>
+                <p className="text-xs text-muted-foreground font-mono mt-1 line-clamp-2">{p.description}</p>
               </div>
             </motion.div>
           ))}

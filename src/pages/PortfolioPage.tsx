@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useSearchParams } from "react-router-dom";
-import { Plus, Settings, X, Pencil, Trash2, ChevronLeft, ChevronRight, LogOut } from "lucide-react";
+import { Plus, Settings, X, Pencil, Trash2, ChevronLeft, ChevronRight, LogOut, Star } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,7 @@ interface Project {
   location?: string;
   cover_image?: string;
   is_published: boolean;
+  show_on_home: boolean;
   sort_order: number;
   created_at: string;
 }
@@ -154,6 +155,20 @@ const PortfolioPage = () => {
     await supabase.from('portfolio_projects').delete().eq('id', project.id);
     loadProjects();
     toast({ title: "Проект удалён" });
+  };
+
+  const toggleHome = async (project: Project) => {
+    const next = !project.show_on_home;
+    const { error } = await supabase
+      .from('portfolio_projects')
+      .update({ show_on_home: next })
+      .eq('id', project.id);
+    if (error) {
+      toast({ title: "Ошибка", description: "Не удалось обновить", variant: "destructive" });
+      return;
+    }
+    setAllProjects(prev => prev.map(p => p.id === project.id ? { ...p, show_on_home: next } : p));
+    toast({ title: next ? "Добавлено на главную" : "Убрано с главной" });
   };
 
   const openLightbox = async (project: Project) => {
@@ -310,12 +325,21 @@ const PortfolioPage = () => {
                       )}
                     </div>
                     {isAdmin && (
-                      <button
-                        onClick={() => deleteProject(p)}
-                        className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </button>
+                      <div className="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => toggleHome(p)}
+                          title={p.show_on_home ? "Убрать с главной" : "Показывать на главной"}
+                          className={`rounded-full p-1.5 ${p.show_on_home ? 'bg-accent text-accent-foreground' : 'bg-background/90 text-foreground hover:bg-accent hover:text-accent-foreground'}`}
+                        >
+                          <Star className={`w-3 h-3 ${p.show_on_home ? 'fill-current' : ''}`} />
+                        </button>
+                        <button
+                          onClick={() => deleteProject(p)}
+                          className="bg-destructive text-destructive-foreground rounded-full p-1.5"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
                     )}
                     <div className="p-5">
                       <div className="flex items-center gap-2 mb-2">
