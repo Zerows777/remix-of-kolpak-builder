@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Plus, Settings, X, Pencil, Trash2, ChevronLeft, ChevronRight, LogOut } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -45,6 +45,7 @@ interface Category {
 
 const PortfolioPage = () => {
   const { isAdmin, signOut } = useAuth();
+  const [searchParams] = useSearchParams();
   const [activeFilter, setActiveFilter] = useState("Все");
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -64,6 +65,12 @@ const PortfolioPage = () => {
     loadProjects();
     loadCategories();
   }, []);
+
+  // Apply category filter from URL query (?category=...)
+  useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat) setActiveFilter(cat);
+  }, [searchParams]);
 
   const loadProjects = async () => {
     try {
