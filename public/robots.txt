@@ -9,9 +9,15 @@ Allow: /
 
 User-agent: Yandex
 Allow: /
-Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&yclid&gclid&from
+
+User-agent: YandexBot
+Allow: /
 
 User-agent: Bingbot
+Allow: /
+
+User-agent: Mail.RU_Bot
 Allow: /
 
 Sitemap: https://kolpak.by/sitemap.xml
