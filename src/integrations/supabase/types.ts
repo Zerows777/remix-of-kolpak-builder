@@ -17,20 +17,35 @@ export type Database = {
       portfolio_categories: {
         Row: {
           created_at: string
+          description: string | null
+          icon: string | null
           id: string
+          items: string[] | null
           name: string
+          show_in_catalog: boolean
+          slug: string | null
           sort_order: number | null
         }
         Insert: {
           created_at?: string
+          description?: string | null
+          icon?: string | null
           id?: string
+          items?: string[] | null
           name: string
+          show_in_catalog?: boolean
+          slug?: string | null
           sort_order?: number | null
         }
         Update: {
           created_at?: string
+          description?: string | null
+          icon?: string | null
           id?: string
+          items?: string[] | null
           name?: string
+          show_in_catalog?: boolean
+          slug?: string | null
           sort_order?: number | null
         }
         Relationships: []
