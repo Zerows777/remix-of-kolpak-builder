@@ -1,0 +1,56 @@
+name: Build and Release Site Archive
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build production bundle
+        run: bun run build
+
+      - name: Add SPA routing fallbacks
+        run: |
+          cp dist/index.html dist/200.html
+          cp dist/index.html dist/404.html
+          echo "/* /index.html 200" > dist/_redirects
+
+      - name: Create archive
+        run: |
+          cd dist
+          zip -r ../kolpak-site.zip .
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kolpak-site
+          path: kolpak-site.zip
+          retention-days: 90
+
+      - name: Publish rolling "latest" release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest production build
+          body: |
+            Автоматическая сборка из коммита ${{ github.sha }}.
+            Скачайте `kolpak-site.zip` и распакуйте в корень хостинга.
+          files: kolpak-site.zip
+          make_latest: "true"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
