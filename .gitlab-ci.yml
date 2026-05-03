@@ -1,0 +1,44 @@
+stages:
+  - build
+  - release
+
+variables:
+  PACKAGE_VERSION: "latest"
+  PACKAGE_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/site/${PACKAGE_VERSION}/kolpak-site.zip"
+
+build:
+  stage: build
+  image: oven/bun:1
+  script:
+    - bun install --frozen-lockfile
+    - bun run build
+    - cp dist/index.html dist/200.html
+    - cp dist/index.html dist/404.html
+    - echo "/* /index.html 200" > dist/_redirects
+    - apt-get update && apt-get install -y zip
+    - cd dist && zip -r ../kolpak-site.zip . && cd ..
+    - |
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" \
+           --upload-file kolpak-site.zip \
+           "${PACKAGE_URL}"
+  artifacts:
+    paths:
+      - kolpak-site.zip
+    expire_in: 90 days
+  only:
+    - main
+
+pages:
+  stage: release
+  image: alpine:latest
+  dependencies:
+    - build
+  script:
+    - apk add --no-cache unzip
+    - mkdir -p public
+    - unzip -o kolpak-site.zip -d public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
