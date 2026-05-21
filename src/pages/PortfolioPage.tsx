@@ -17,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { isVideoUrl } from "@/lib/media";
 
 interface Project {
   id: string;
@@ -322,9 +323,22 @@ const PortfolioPage = () => {
                 {filtered.map((p, i) => (
                   <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }}
                     className="group bg-card border-brutal-thin hover-lift overflow-hidden relative">
-                    <div className="aspect-[4/3] overflow-hidden cursor-pointer" onClick={() => openLightbox(p)}>
+                    <div className="aspect-[4/3] overflow-hidden cursor-pointer relative bg-muted" onClick={() => openLightbox(p)}>
                       {p.cover_image ? (
-                        <img src={p.cover_image} alt={p.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105" />
+                        isVideoUrl(p.cover_image) ? (
+                          <>
+                            <video
+                              src={p.cover_image}
+                              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                              muted
+                              playsInline
+                              preload="metadata"
+                            />
+                            <span className="absolute top-2 left-2 bg-black/70 text-white text-[10px] font-mono px-2 py-0.5 rounded uppercase tracking-wider">▶ Видео</span>
+                          </>
+                        ) : (
+                          <img src={p.cover_image} alt={p.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105" />
+                        )
                       ) : (
                         <div className="w-full h-full bg-muted flex items-center justify-center">
                           <span className="text-muted-foreground text-sm">Нет изображения</span>
@@ -417,12 +431,24 @@ const PortfolioPage = () => {
               </>
             )}
 
-            <img
-              src={lightboxImages[lightboxIndex]?.image_url}
-              alt={lightboxImages[lightboxIndex]?.alt_text || ''}
-              className="max-w-[90vw] max-h-[85vh] object-contain"
-              onClick={(e) => e.stopPropagation()}
-            />
+            {isVideoUrl(lightboxImages[lightboxIndex]?.image_url) ? (
+              <video
+                key={lightboxImages[lightboxIndex]?.id}
+                src={lightboxImages[lightboxIndex]?.image_url}
+                className="max-w-[90vw] max-h-[85vh] object-contain"
+                controls
+                autoPlay
+                playsInline
+                onClick={(e) => e.stopPropagation()}
+              />
+            ) : (
+              <img
+                src={lightboxImages[lightboxIndex]?.image_url}
+                alt={lightboxImages[lightboxIndex]?.alt_text || ''}
+                className="max-w-[90vw] max-h-[85vh] object-contain"
+                onClick={(e) => e.stopPropagation()}
+              />
+            )}
 
             {lightboxImages.length > 1 && (
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
