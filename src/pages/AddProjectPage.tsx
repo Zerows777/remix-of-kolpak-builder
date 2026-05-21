@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { X, ImagePlus } from "lucide-react";
+import { isVideoFile } from "@/lib/media";
 
 const projectSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -280,27 +281,38 @@ const AddProjectPage = () => {
 
                   {/* Multi-image upload */}
                   <div className="space-y-2">
-                    <FormLabel>Фотографии проекта * (до 5 шт.)</FormLabel>
+                    <FormLabel>Фото и видео проекта * (до 5 шт.)</FormLabel>
                     
                     {previews.length > 0 && (
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {previews.map((preview, index) => (
-                          <div key={index} className="relative aspect-[4/3] rounded-md overflow-hidden border border-border">
-                            <img src={preview} alt={`Фото ${index + 1}`} className="w-full h-full object-cover" />
-                            <button
-                              type="button"
-                              onClick={() => removeFile(index)}
-                              className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1 hover:opacity-80"
-                            >
-                              <X className="w-3 h-3" />
-                            </button>
-                            {index === 0 && (
-                              <span className="absolute bottom-1 left-1 bg-primary text-primary-foreground text-[10px] px-2 py-0.5 rounded">
-                                Обложка
-                              </span>
-                            )}
-                          </div>
-                        ))}
+                        {previews.map((preview, index) => {
+                          const file = selectedFiles[index];
+                          const isVideo = file ? isVideoFile(file) : false;
+                          return (
+                            <div key={index} className="relative aspect-[4/3] rounded-md overflow-hidden border border-border bg-muted">
+                              {isVideo ? (
+                                <video src={preview} className="w-full h-full object-cover" muted playsInline />
+                              ) : (
+                                <img src={preview} alt={`Фото ${index + 1}`} className="w-full h-full object-cover" />
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => removeFile(index)}
+                                className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1 hover:opacity-80"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                              {isVideo && (
+                                <span className="absolute top-1 left-1 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded">▶ Видео</span>
+                              )}
+                              {index === 0 && (
+                                <span className="absolute bottom-1 left-1 bg-primary text-primary-foreground text-[10px] px-2 py-0.5 rounded">
+                                  Обложка
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
 
@@ -308,11 +320,11 @@ const AddProjectPage = () => {
                       <label className="flex items-center justify-center gap-2 border-2 border-dashed border-border rounded-md p-6 cursor-pointer hover:border-primary/50 transition-colors">
                         <ImagePlus className="w-5 h-5 text-muted-foreground" />
                         <span className="text-sm text-muted-foreground">
-                          Добавить фото ({selectedFiles.length}/5)
+                          Добавить фото или видео ({selectedFiles.length}/5)
                         </span>
                         <input
                           type="file"
-                          accept="image/*"
+                          accept="image/*,video/*"
                           multiple
                           className="hidden"
                           onChange={handleFilesChange}

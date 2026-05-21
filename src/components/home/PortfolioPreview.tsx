@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { isVideoUrl } from "@/lib/media";
 import portfolio1 from "@/assets/portfolio-1.jpg";
 import portfolio2 from "@/assets/portfolio-2.jpg";
 import portfolio3 from "@/assets/portfolio-3.jpg";
@@ -76,11 +77,21 @@ const PortfolioPreview = () => {
             >
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 {p.cover_image ? (
-                  <img
-                    src={p.cover_image}
-                    alt={p.title}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
-                  />
+                  isVideoUrl(p.cover_image) ? (
+                    <video
+                      src={p.cover_image}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                      muted
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <img
+                      src={p.cover_image}
+                      alt={p.title}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                    />
+                  )
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">
                     Нет изображения

@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { X, ImagePlus, Star } from "lucide-react";
+import { isVideoFile, isVideoUrl } from "@/lib/media";
 
 const projectSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -323,42 +324,58 @@ const EditProjectPage = () => {
                   </button>
 
                   <div className="space-y-2">
-                    <FormLabel>Фотографии проекта * (до {MAX_IMAGES} шт.)</FormLabel>
+                    <FormLabel>Фото и видео проекта * (до {MAX_IMAGES} шт.)</FormLabel>
 
                     {(existingImages.length > 0 || newPreviews.length > 0) && (
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {existingImages.map((img, index) => (
-                          <div
-                            key={img.id}
-                            className="relative aspect-[4/3] rounded-md overflow-hidden border border-border"
-                          >
-                            <img
-                              src={img.image_url}
-                              alt={img.alt_text || ""}
-                              className="w-full h-full object-cover"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => removeExistingImage(img.id)}
-                              className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1 hover:opacity-80"
+                        {existingImages.map((img, index) => {
+                          const isVideo = isVideoUrl(img.image_url);
+                          return (
+                            <div
+                              key={img.id}
+                              className="relative aspect-[4/3] rounded-md overflow-hidden border border-border bg-muted"
                             >
-                              <X className="w-3 h-3" />
-                            </button>
-                            {index === 0 && (
-                              <span className="absolute bottom-1 left-1 bg-primary text-primary-foreground text-[10px] px-2 py-0.5 rounded">
-                                Обложка
-                              </span>
-                            )}
-                          </div>
-                        ))}
+                              {isVideo ? (
+                                <video src={img.image_url} className="w-full h-full object-cover" muted playsInline preload="metadata" />
+                              ) : (
+                                <img
+                                  src={img.image_url}
+                                  alt={img.alt_text || ""}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => removeExistingImage(img.id)}
+                                className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1 hover:opacity-80"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                              {isVideo && (
+                                <span className="absolute top-1 left-1 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded">▶ Видео</span>
+                              )}
+                              {index === 0 && (
+                                <span className="absolute bottom-1 left-1 bg-primary text-primary-foreground text-[10px] px-2 py-0.5 rounded">
+                                  Обложка
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })}
                         {newPreviews.map((preview, index) => {
                           const overallIndex = existingImages.length + index;
+                          const file = newFiles[index];
+                          const isVideo = file ? isVideoFile(file) : false;
                           return (
                             <div
                               key={`new-${index}`}
-                              className="relative aspect-[4/3] rounded-md overflow-hidden border border-accent/40"
+                              className="relative aspect-[4/3] rounded-md overflow-hidden border border-accent/40 bg-muted"
                             >
-                              <img src={preview} alt={`Новое фото ${index + 1}`} className="w-full h-full object-cover" />
+                              {isVideo ? (
+                                <video src={preview} className="w-full h-full object-cover" muted playsInline />
+                              ) : (
+                                <img src={preview} alt={`Новое фото ${index + 1}`} className="w-full h-full object-cover" />
+                              )}
                               <button
                                 type="button"
                                 onClick={() => removeNewFile(index)}
@@ -372,7 +389,7 @@ const EditProjectPage = () => {
                                 </span>
                               )}
                               <span className="absolute top-1 left-1 bg-accent text-accent-foreground text-[10px] px-2 py-0.5 rounded">
-                                Новое
+                                {isVideo ? "▶ Новое видео" : "Новое"}
                               </span>
                             </div>
                           );
@@ -384,11 +401,11 @@ const EditProjectPage = () => {
                       <label className="flex items-center justify-center gap-2 border-2 border-dashed border-border rounded-md p-6 cursor-pointer hover:border-primary/50 transition-colors">
                         <ImagePlus className="w-5 h-5 text-muted-foreground" />
                         <span className="text-sm text-muted-foreground">
-                          Добавить фото ({totalImagesCount}/{MAX_IMAGES})
+                          Добавить фото или видео ({totalImagesCount}/{MAX_IMAGES})
                         </span>
                         <input
                           type="file"
-                          accept="image/*"
+                          accept="image/*,video/*"
                           multiple
                           className="hidden"
                           onChange={handleFilesChange}
