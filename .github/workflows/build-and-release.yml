@@ -54,3 +54,21 @@ jobs:
           make_latest: "true"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send archive to email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_HOST }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          secure: true
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          from: KOLPAK Build <${{ secrets.SMTP_USER }}>
+          to: pogesti@gmail.com
+          subject: "KOLPAK.by — новая сборка ${{ github.sha }}"
+          body: |
+            Автоматическая сборка сайта KOLPAK.by.
+            Коммит: ${{ github.sha }}
+            Архив kolpak-site.zip во вложении — распакуйте в корень хостинга.
+          attachments: kolpak-site.zip
+
