@@ -74,12 +74,6 @@ const Header = () => {
               <Phone className="w-4 h-4" />
               +375(29)611-14-21
             </a>
-            <Link
-              to="/contacts"
-              className="px-5 py-2.5 bg-accent text-accent-foreground text-sm font-bold uppercase tracking-wider border-2 border-accent-foreground/20 shadow-brutal-sm hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal transition-all"
-            >
-              Заявка →
-            </Link>
           </div>
 
           <button
