@@ -1,46 +1,73 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
-import { AuthProvider } from "@/contexts/AuthContext";
-import Index from "./pages/Index";
-import CatalogPage from "./pages/CatalogPage";
-import PortfolioPage from "./pages/PortfolioPage";
-import AddProjectPage from "./pages/AddProjectPage";
-import EditProjectPage from "./pages/EditProjectPage";
-import AboutPage from "./pages/AboutPage";
-import ContactsPage from "./pages/ContactsPage";
-import AdminLoginPage from "./pages/AdminLoginPage";
-import NotFound from "./pages/NotFound";
+import type { RouteRecord } from 'vite-react-ssg'
+import { AuthProvider } from '@/contexts/AuthContext'
+import { HelmetProvider } from 'react-helmet-async'
+import Index from '@/pages/Index'
+import CatalogPage from '@/pages/CatalogPage'
+import PortfolioPage from '@/pages/PortfolioPage'
+import AboutPage from '@/pages/AboutPage'
+import ContactsPage from '@/pages/ContactsPage'
+import CalculatorPage from '@/pages/CalculatorPage'
+import AdminLoginPage from '@/pages/AdminLoginPage'
+import AddProjectPage from '@/pages/AddProjectPage'
+import EditProjectPage from '@/pages/EditProjectPage'
+import NotFound from '@/pages/NotFound'
+import { supabase } from '@/integrations/supabase/client'
 
-const queryClient = new QueryClient();
+function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <HelmetProvider>
+      <AuthProvider>{children}</AuthProvider>
+    </HelmetProvider>
+  )
+}
 
-const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/catalog" element={<CatalogPage />} />
-              <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/add-project" element={<AddProjectPage />} />
-              <Route path="/edit-project/:id" element={<EditProjectPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/contacts" element={<ContactsPage />} />
-              <Route path="/admin-login" element={<AdminLoginPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
-);
-
-export default App;
+export const routes: RouteRecord[] = [
+  {
+    path: '/',
+    element: <Layout><Index /></Layout>,
+  },
+  {
+    path: '/catalog',
+    element: <Layout><CatalogPage /></Layout>,
+    loader: async () => {
+      if (!import.meta.env.SSR) return null
+      const { data } = await supabase
+        .from('portfolio_categories')
+        .select('*')
+        .order('sort_order', { ascending: true })
+      return { categories: data ?? [] }
+    },
+  },
+  {
+    path: '/portfolio',
+    element: <Layout><PortfolioPage /></Layout>,
+  },
+  {
+    path: '/about',
+    element: <Layout><AboutPage /></Layout>,
+  },
+  {
+    path: '/contacts',
+    element: <Layout><ContactsPage /></Layout>,
+  },
+  {
+    path: '/calculator',
+    element: <Layout><CalculatorPage /></Layout>,
+  },
+  {
+    path: '/admin',
+    element: <Layout><AdminLoginPage /></Layout>,
+  },
+  {
+    path: '/portfolio/add',
+    element: <Layout><AddProjectPage /></Layout>,
+  },
+  {
+    path: '/portfolio/edit/:id',
+    element: <Layout><EditProjectPage /></Layout>,
+  },
+  {
+    path: '*',
+    element: <Layout><NotFound /></Layout>,
+  },
+]
